@@ -1,0 +1,15 @@
+{
+  "name": "seele",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "build": "ncc build src/index.js"
+  },
+  "license": "MIT",
+  "devDependencies": {},
+  "dependencies": {
+    "cron": "^1.8.2",
+    "node-fetch": "^2.6.1"
+  }
+}
