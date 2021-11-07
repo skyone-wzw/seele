@@ -44,7 +44,7 @@ class EventPipe {
     listener = {};
 
     register(service) {
-        if ((service.cron || service.time) && service.fun && service.name) {
+        if (service.fun && service.name) {
             if (service.cron) {
                 const job = new CronJob({
                     cronTime: service.cron,
@@ -60,7 +60,7 @@ class EventPipe {
                     },
                     service: service
                 };
-            } else {
+            } else if (service.time) {
                 this.loaded[service.name] = {
                     name: service.name,
                     type: "time",
@@ -72,6 +72,17 @@ class EventPipe {
                             get job() {return job}
                         }
                     })(),
+                    service: service
+                }
+            } else {
+                this.loaded[service.name] = {
+                    name: service.name,
+                    type: "time",
+                    job: {
+                        start: () => {},
+                        stop: () => {},
+                        job: null
+                    },
                     service: service
                 }
             }
@@ -104,10 +115,10 @@ class EventPipe {
         if (service) {
             await Promise.resolve(true)
                 // 初始化服务
-                .then(res => service.service.start(this.seele.context()))
+                .then(() => service.service.start(this.seele.context()))
                 // 启动定时器
-                .then(res => service.job.start())
-                .then(res => {
+                .then(() => service.job.start())
+                .then(() => {
                     log("Seele.EventPipe.run",`启动${service.name}服务`);
                     return true;
                 })
@@ -125,10 +136,10 @@ class EventPipe {
         if (service) {
             await Promise.resolve(true)
                 // 初始化服务
-                .then(res => service.service.stop(this.seele.context()))
+                .then(() => service.service.stop(this.seele.context()))
                 // 启动定时器
-                .then(res => service.job.stop())
-                .then(res => {
+                .then(() => service.job.stop())
+                .then(() => {
                     log("Seele.EventPipe.stop",`停止${service.name}服务`);
                     return true;
                 })
@@ -159,7 +170,7 @@ class EventPipe {
 
     push(event) {
         Promise.resolve(true)
-            .then(async O_O => {
+            .then(async () => {
                 for (const listenerName of Object.keys(this.listener)) {
                     const listener = this.listener[listenerName];
                     if (!event.ok && event.name.search(listener.on) !== -1) {
