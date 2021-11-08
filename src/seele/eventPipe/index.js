@@ -173,12 +173,15 @@ class EventPipe {
             .then(async () => {
                 for (const listenerName of Object.keys(this.listener)) {
                     const listener = this.listener[listenerName];
-                    if (!event.ok && event.name.search(listener.on) !== -1) {
-                        event = await listener.run(this.seele.context({
-                            service: listener.service,
-                            eventListener: listener,
-                            event: event
-                        }));
+                    if (!event.ok) {
+                        if ((listener.on instanceof RegExp && event.name.search(listener.on) !== -1) ||
+                            (typeof listener.on === "string" && event.name === listener.on)) {
+                            event = await listener.run(this.seele.context({
+                                service: listener.service,
+                                eventListener: listener,
+                                event: event
+                            }));
+                        }
                     } else {
                         return true;
                     }

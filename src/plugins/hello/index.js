@@ -2,7 +2,7 @@ const Seele = require("../../seele")
 
 module.exports = new Seele.EventListener({
     name: "skyone.hello",
-    on: /^Seele\.Message\.GroupMessage$/,
+    on: "Seele.Message.GroupMessage",
     run: async (ctx) => {
         const type = ctx.message.type;
         const message = ctx.event.data;
