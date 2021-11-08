@@ -4,10 +4,12 @@
   "main": "index.js",
   "scripts": {
     "start": "node src/index.js",
-    "build": "ncc build src/index.js"
+    "build": "node scripts/build.js"
   },
   "license": "MIT",
-  "devDependencies": {},
+  "devDependencies": {
+    "@vercel/ncc": "^0.31.1"
+  },
   "dependencies": {
     "cron": "^1.8.2",
     "node-fetch": "^2.6.1"

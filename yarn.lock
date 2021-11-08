@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+"@vercel/ncc@^0.31.1":
+  version "0.31.1"
+  resolved "https://registry.nlark.com/@vercel/ncc/download/@vercel/ncc-0.31.1.tgz#9346c7e59326f5eeac75c0286e47df94c2d6d8f7"
+  integrity sha1-k0bH5ZMm9e6sdcAobkfflMLW2Pc=
+
 cron@^1.8.2:
   version "1.8.2"
   resolved "https://registry.nlark.com/cron/download/cron-1.8.2.tgz#4ac5e3c55ba8c163d84f3407bde94632da8370ce"
